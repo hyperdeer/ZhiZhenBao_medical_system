@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>医疗助手</title>
+  <title>智诊宝</title>
   <link rel="stylesheet" href="/assets/styles.css" />
 </head>
 <body>
@@ -20,7 +20,7 @@
               alt=""
               decoding="async"
             />
-            <span class="logo-text">医疗助手</span>
+            <span class="logo-text">智诊宝</span>
           </div>
           <button
             type="button"
@@ -87,8 +87,18 @@
           </div>
           <button type="button" class="icon-btn mobile-only" id="btnOpenSidebar" aria-label="菜单">☰</button>
         </div>
-        <h1 class="main-title" id="mainTitle">医疗助手</h1>
-        <div class="main-header-end" aria-hidden="true"></div>
+        <h1 class="main-title" id="mainTitle">智诊宝</h1>
+        <div class="main-header-end" id="mainHeaderEnd">
+          <button type="button" class="auth-login-btn" id="btnLogin">登录</button>
+          <div class="auth-user-wrap hidden" id="authUserWrap">
+            <span class="auth-avatar" id="authAvatar">U</span>
+            <span class="auth-name" id="authName"></span>
+            <div class="auth-user-menu hidden" id="authUserMenu">
+              <button type="button" class="auth-menu-item" id="btnOpenSettings">设置</button>
+              <button type="button" class="auth-menu-item" id="btnLogout">退出登录</button>
+            </div>
+          </div>
+        </div>
       </header>
 
       <div class="center-stage" id="welcomeStage">
@@ -122,7 +132,7 @@
               id="inputText"
               class="composer-input"
               rows="1"
-              placeholder="给 医疗助手 发送消息"
+              placeholder="给 智诊宝 发送消息"
               maxlength="16000"
             ></textarea>
             <button type="button" class="composer-send" id="btnSend" title="发送" aria-label="发送">
@@ -136,6 +146,119 @@
     </main>
   </div>
   <div class="sidebar-backdrop hidden" id="sidebarBackdrop"></div>
+  <div class="auth-backdrop hidden" id="authBackdrop"></div>
+  <div class="auth-modal hidden" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+    <div class="auth-panel">
+      <button type="button" class="auth-close-btn" id="btnCloseAuthModal" aria-label="关闭登录弹窗">×</button>
+      <h2 class="auth-title" id="authTitle">登录以解锁更多功能</h2>
+      <div class="auth-tabs" role="tablist" aria-label="登录注册切换">
+        <button type="button" class="auth-tab active" id="tabLogin">登录</button>
+        <button type="button" class="auth-tab" id="tabRegister">注册</button>
+      </div>
+
+      <form class="auth-form" id="loginForm">
+        <input type="text" id="loginUsername" class="auth-input" placeholder="请输入账号" autocomplete="username" />
+        <input type="password" id="loginPassword" class="auth-input" placeholder="请输入密码" autocomplete="current-password" />
+        <div class="captcha-row">
+          <input type="text" id="loginCaptchaInput" class="auth-input" placeholder="请输入验证码" />
+          <button type="button" class="captcha-btn" id="btnRefreshCaptchaLogin">
+            <img id="loginCaptchaImage" alt="验证码" />
+          </button>
+        </div>
+        <button type="submit" class="auth-submit-btn">登录</button>
+      </form>
+
+      <form class="auth-form hidden" id="registerForm">
+        <input type="text" id="registerUsername" class="auth-input" placeholder="请输入账号" autocomplete="username" />
+        <input type="text" id="registerNickname" class="auth-input" placeholder="请输入昵称" autocomplete="nickname" />
+        <input type="password" id="registerPassword" class="auth-input" placeholder="请输入密码" autocomplete="new-password" />
+        <input type="password" id="registerConfirmPassword" class="auth-input" placeholder="请确认密码" autocomplete="new-password" />
+        <div class="captcha-row">
+          <input type="text" id="registerCaptchaInput" class="auth-input" placeholder="请输入验证码" />
+          <button type="button" class="captcha-btn" id="btnRefreshCaptchaRegister">
+            <img id="registerCaptchaImage" alt="验证码" />
+          </button>
+        </div>
+        <button type="submit" class="auth-submit-btn">注册</button>
+      </form>
+
+    </div>
+  </div>
+  <div class="settings-route hidden" id="settingsRoute">
+    <div class="settings-route-inner">
+      <div class="settings-page" id="settingsHomePage">
+        <div class="settings-profile-hero">
+          <div class="settings-profile-avatar" id="settingsProfileAvatar">U</div>
+          <h2 class="settings-profile-name" id="settingsProfileName">用户</h2>
+          <p class="settings-profile-username" id="settingsProfileUsername">@username</p>
+        </div>
+
+        <section class="settings-group">
+          <h3 class="settings-group-title" id="settingsTitle">个人资料</h3>
+          <div class="settings-actions">
+            <button type="button" class="settings-action-btn" id="btnNicknameSettings">修改昵称</button>
+            <button type="button" class="settings-action-btn" id="btnPasswordSettings">修改密码</button>
+          </div>
+        </section>
+
+        <section class="settings-group">
+          <h3 class="settings-group-title">数据管理</h3>
+          <div class="settings-actions">
+            <button type="button" class="settings-action-btn" id="btnClearChatHistory">清空对话记录</button>
+            <button type="button" class="settings-action-btn settings-action-danger" id="btnDeleteAccount">删除账号并退出登录</button>
+            <button type="button" class="settings-action-btn" id="btnBackToChatFromHome">返回对话</button>
+          </div>
+        </section>
+      </div>
+
+      <form class="auth-form hidden settings-page settings-form-page" id="settingsNicknameForm">
+        <button type="button" class="settings-back-btn" id="btnBackFromNickname">← 返回设置</button>
+        <h2 class="settings-title">个人资料</h2>
+        <p class="settings-subtitle">修改昵称与头像地址</p>
+        <div class="settings-avatar-editor">
+          <img id="settingsAvatarPreview" class="settings-avatar-preview" src="/assets/picture.webp" alt="头像预览" />
+          <input type="file" id="settingsAvatarFile" accept="image/*" class="hidden" />
+          <button type="button" class="settings-avatar-upload-btn" id="btnPickSettingsAvatar">选择本地头像</button>
+        </div>
+        <div class="settings-form-card">
+          <input type="text" id="settingsNickname" class="auth-input" placeholder="昵称" />
+        </div>
+        <button type="submit" class="auth-submit-btn">完成</button>
+      </form>
+
+      <form class="auth-form hidden settings-page settings-form-page" id="settingsPasswordForm">
+        <button type="button" class="settings-back-btn" id="btnBackFromPassword">← 返回设置</button>
+        <h2 class="settings-title">修改密码</h2>
+        <p class="settings-subtitle">请填写旧密码和新密码</p>
+        <div class="settings-form-card">
+          <input type="password" id="settingsOldPassword" class="auth-input" placeholder="旧密码" />
+          <input type="password" id="settingsNewPassword" class="auth-input" placeholder="新密码" />
+          <input type="password" id="settingsConfirmNewPassword" class="auth-input" placeholder="确认新密码" />
+          <div class="captcha-row">
+            <input type="text" id="settingsCaptchaInput" class="auth-input" placeholder="请输入验证码" />
+            <button type="button" class="captcha-btn" id="btnRefreshCaptchaSettings">
+              <img id="settingsCaptchaImage" alt="验证码" />
+            </button>
+          </div>
+        </div>
+        <button type="submit" class="auth-submit-btn">完成</button>
+      </form>
+
+      <div class="settings-page hidden settings-form-page" id="settingsClearPage">
+        <button type="button" class="settings-back-btn" id="btnBackFromClear">← 返回设置</button>
+        <h2 class="settings-title">清空对话记录</h2>
+        <p class="settings-subtitle">该操作将清空当前账号下全部历史对话。</p>
+        <button type="button" class="auth-submit-btn" id="btnConfirmClearChatHistory">确认清空</button>
+      </div>
+
+      <div class="settings-page hidden settings-form-page" id="settingsDeletePage">
+        <button type="button" class="settings-back-btn" id="btnBackFromDelete">← 返回设置</button>
+        <h2 class="settings-title">删除账号并退出登录</h2>
+        <p class="settings-subtitle">账号一经删除无法恢复。</p>
+        <button type="button" class="auth-submit-btn settings-delete-confirm-btn" id="btnConfirmDeleteAccount">确认删除账号</button>
+      </div>
+    </div>
+  </div>
   <script src="/assets/app.js"></script>
 </body>
 </html>

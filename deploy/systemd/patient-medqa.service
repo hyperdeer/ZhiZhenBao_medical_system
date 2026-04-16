@@ -1,0 +1,17 @@
+[Unit]
+Description=Patient Medical QA FastAPI Service
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/srv/patient_medical_qa
+EnvironmentFile=/srv/patient_medical_qa/.env
+ExecStart=/srv/patient_medical_qa/.venv/bin/uvicorn server:app --host 127.0.0.1 --port 8765
+Restart=always
+RestartSec=3
+TimeoutStopSec=20
+
+[Install]
+WantedBy=multi-user.target
